@@ -35,5 +35,12 @@
         {
             return _dataContext.Persons.FirstOrDefault(p => p.ApplicationUserId == appUserId);
         }
+
+        public void UpdatePerson(Person person)
+        {
+            var personToUpdate = _dataContext.Persons.FirstOrDefault(p => p.ApplicationUserId == person.ApplicationUserId);
+            personToUpdate.CurrentLocation = person.CurrentLocation;
+            _dataContext.SaveChanges();
+        }
     }
 }

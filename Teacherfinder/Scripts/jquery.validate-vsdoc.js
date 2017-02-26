@@ -1,24 +1,10 @@
-﻿/* NUGET: BEGIN LICENSE TEXT
- *
- * Microsoft grants you the right to use these script files for the sole
- * purpose of either: (i) interacting through your browser with the Microsoft
- * website or online service, subject to the applicable licensing or use
- * terms; or (ii) using the files as included with a Microsoft product subject
- * to that product's license terms. Microsoft reserves all other rights to the
- * files not expressly granted by Microsoft, whether by implication, estoppel
- * or otherwise. Insofar as a script file is dual licensed under GPL,
- * Microsoft neither took the code under GPL nor distributes it thereunder but
- * under the terms set out in this paragraph. All notices and licenses
- * below are for informational purposes only.
- *
- * NUGET: END LICENSE TEXT */
-/*
+﻿/*
 * This file has been commented to support Visual Studio Intellisense.
 * You should not use this file at runtime inside the browser--it is only
 * intended to be used only for design-time IntelliSense.  Please use the
 * standard jQuery library for all production use.
 *
-* Comment version: 1.11.1
+* Comment version: 1.16.0
 */
 
 /*
@@ -29,7 +15,7 @@
 * for informational purposes only and are not the license terms under
 * which Microsoft distributed this file.
 *
-* jQuery Validation Plugin - v1.11.1 - 2/4/2013
+* jQuery Validation Plugin - v1.16.0 - 12/5/2016
 * https://github.com/jzaefferer/jquery-validation
 * Copyright (c) 2013 Jörn Zaefferer; Licensed MIT
 *
@@ -271,8 +257,8 @@ $.extend($.validator, {
 		messages: {},
 		groups: {},
 		rules: {},
-		errorLesson: "error",
-		validLesson: "valid",
+		errorClass: "error",
+		validClass: "valid",
 		errorElement: "label",
 		focusInvalid: true,
 		errorContainer: $( [] ),
@@ -285,7 +271,7 @@ $.extend($.validator, {
 				
 			// hide error label and remove error class on focus if enabled
 			if ( this.settings.focusCleanup && !this.blockFocusCleanup ) {
-				this.settings.unhighlight && this.settings.unhighlight.call( this, element, this.settings.errorLesson, this.settings.validLesson );
+				this.settings.unhighlight && this.settings.unhighlight.call( this, element, this.settings.errorClass, this.settings.validClass );
 				this.addWrapper(this.errorsFor(element)).hide();
 			}
 		},
@@ -307,11 +293,11 @@ $.extend($.validator, {
 			else if (element.parentNode.name in this.submitted)
 				this.element(element.parentNode);
 		},
-		highlight: function( element, errorLesson, validLesson ) {
-			$(element).addLesson(errorLesson).removeLesson(validLesson);
+		highlight: function( element, errorClass, validClass ) {
+			$(element).addClass(errorClass).removeClass(validClass);
 		},
-		unhighlight: function( element, errorLesson, validLesson ) {
-			$(element).removeLesson(errorLesson).addLesson(validLesson);
+		unhighlight: function( element, errorClass, validClass ) {
+			$(element).removeClass(errorClass).addClass(validClass);
 		}
 	},
 
@@ -484,7 +470,7 @@ $.extend($.validator, {
 			this.submitted = {};
 			this.prepareForm();
 			this.hideErrors();
-			this.elements().removeLesson( this.settings.errorLesson );
+			this.elements().removeClass( this.settings.errorClass );
 		},
 		
 		numberOfInvalids: function() {
@@ -567,7 +553,7 @@ $.extend($.validator, {
 		},
 		
 		errors: function() {
-			return $( this.settings.errorElement + "." + this.settings.errorLesson, this.errorContext );
+			return $( this.settings.errorElement + "." + this.settings.errorClass, this.errorContext );
 		},
 		
 		reset: function() {
@@ -701,7 +687,7 @@ $.extend($.validator, {
 		defaultShowErrors: function() {
 			for ( var i = 0; this.errorList[i]; i++ ) {
 				var error = this.errorList[i];
-				this.settings.highlight && this.settings.highlight.call( this, error.element, this.settings.errorLesson, this.settings.validLesson );
+				this.settings.highlight && this.settings.highlight.call( this, error.element, this.settings.errorClass, this.settings.validClass );
 				this.showLabel( error.element, error.message );
 			}
 			if( this.errorList.length ) {
@@ -714,7 +700,7 @@ $.extend($.validator, {
 			}
 			if (this.settings.unhighlight) {
 				for ( var i = 0, elements = this.validElements(); elements[i]; i++ ) {
-					this.settings.unhighlight.call( this, elements[i], this.settings.errorLesson, this.settings.validLesson );
+					this.settings.unhighlight.call( this, elements[i], this.settings.errorClass, this.settings.validClass );
 				}
 			}
 			this.toHide = this.toHide.not( this.toShow );
@@ -736,7 +722,7 @@ $.extend($.validator, {
 			var label = this.errorsFor( element );
 			if ( label.length ) {
 				// refresh error/success class
-				label.removeLesson().addLesson( this.settings.errorLesson );
+				label.removeClass().addClass( this.settings.errorClass );
 			
 				// check if we have a generated label, replace the message then
 				label.attr("generated") && label.html(message);
@@ -744,7 +730,7 @@ $.extend($.validator, {
 				// create label
 				label = $("<" + this.settings.errorElement + "/>")
 					.attr({"for":  this.idOrName(element), generated: true})
-					.addLesson(this.settings.errorLesson)
+					.addClass(this.settings.errorClass)
 					.html(message || "");
 				if ( this.settings.wrapper ) {
 					// make sure the element is visible, even in IE
@@ -759,7 +745,7 @@ $.extend($.validator, {
 			if ( !message && this.settings.success ) {
 				label.text("");
 				typeof this.settings.success == "string"
-					? label.addLesson( this.settings.success )
+					? label.addClass( this.settings.success )
 					: this.settings.success( label );
 			}
 			this.toShow = this.toShow.add(label);
@@ -866,7 +852,7 @@ $.extend($.validator, {
 		creditcard: {creditcard: true}
 	},
 	
-	addLessonRules: function(className, rules) {
+	addClassRules: function(className, rules) {
 		/// <summary>
 		/// Add a compound class method - useful to refactor common combinations of rules into a single
 		/// class.
@@ -1030,7 +1016,7 @@ $.extend($.validator, {
 		$.validator.methods[name] = method;
 		$.validator.messages[name] = message != undefined ? message : $.validator.messages[name];
 		if (method.length < 3) {
-			$.validator.addLessonRules(name, $.validator.normalizeRule(name));
+			$.validator.addClassRules(name, $.validator.normalizeRule(name));
 		}
 	},
 

@@ -8,6 +8,11 @@ namespace Teacherfinder
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.UseCdn = true;   //enable CDN support
+                                     //add link to jquery on the CDN
+            var googleMapsApi = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDfKdxNyLrx0lgB_T0B80OijAlJSUfu8Oc&libraries=places";
+            bundles.Add(new ScriptBundle("~/bundles/googlemaps", googleMapsApi));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -32,6 +37,7 @@ namespace Teacherfinder
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            
         }
     }
 }

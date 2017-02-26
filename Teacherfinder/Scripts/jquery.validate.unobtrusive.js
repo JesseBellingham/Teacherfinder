@@ -57,12 +57,12 @@
             replaceAttrValue = container.attr("data-valmsg-replace"),
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) !== false : null;
 
-        container.removeLesson("field-validation-valid").addLesson("field-validation-error");
+        container.removeClass("field-validation-valid").addClass("field-validation-error");
         error.data("unobtrusiveContainer", container);
 
         if (replace) {
             container.empty();
-            error.removeLesson("input-validation-error").appendTo(container);
+            error.removeClass("input-validation-error").appendTo(container);
         }
         else {
             error.hide();
@@ -75,7 +75,7 @@
 
         if (list && list.length && validator.errorList.length) {
             list.empty();
-            container.addLesson("validation-summary-errors").removeLesson("validation-summary-valid");
+            container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
 
             $.each(validator.errorList, function () {
                 $("<li />").html(this.message).appendTo(list);
@@ -89,7 +89,7 @@
             replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
 
         if (container) {
-            container.addLesson("field-validation-valid").removeLesson("field-validation-error");
+            container.addClass("field-validation-valid").removeClass("field-validation-error");
             error.removeData("unobtrusiveContainer");
 
             if (replace) {
@@ -113,11 +113,11 @@
         }
 
         $form.find(".validation-summary-errors")
-            .addLesson("validation-summary-valid")
-            .removeLesson("validation-summary-errors");
+            .addClass("validation-summary-valid")
+            .removeClass("validation-summary-errors");
         $form.find(".field-validation-error")
-            .addLesson("field-validation-valid")
-            .removeLesson("field-validation-error")
+            .addClass("field-validation-valid")
+            .removeClass("field-validation-error")
             .removeData("unobtrusiveContainer")
             .find(">*")  // If we were using valmsg-replace, get the underlying error
                 .removeData("unobtrusiveContainer");
@@ -136,7 +136,7 @@
         if (!result) {
             result = {
                 options: {  // options structure passed to jQuery Validate's validate() method
-                    errorLesson: defaultOptions.errorLesson || "input-validation-error",
+                    errorClass: defaultOptions.errorClass || "input-validation-error",
                     errorElement: defaultOptions.errorElement || "span",
                     errorPlacement: function () {
                         onError.apply(form, arguments);

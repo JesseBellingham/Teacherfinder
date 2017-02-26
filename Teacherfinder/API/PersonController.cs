@@ -58,6 +58,16 @@
             return Request.CreateResponse(HttpStatusCode.OK, model);
         }
 
+        [HttpPost]
+        public HttpResponseMessage UpdateLocation(PersonLocationModel model)//int? personId)
+        {
+            var appUserId = User.Identity.GetUserId();
+
+            _personService.UpdateLocation(appUserId, model);
+
+            return Request.CreateResponse(HttpStatusCode.OK, model);
+        }
+
         //public HttpResponseMessage Create(PersonModel model)
         //{
         //    var newPersonModel = new DataLayer.DomainModels.PersonModel

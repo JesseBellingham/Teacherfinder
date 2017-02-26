@@ -4,7 +4,11 @@ app.controller('CreateLessonCtrl', ["$rootScope", "$scope", "$timeout", "$uibMod
     this.lessonDetails = {
         lessonName: null,
         location: null,
-        lessonType: null
+        lessonType: {
+            skype: false,
+            faceToFace: false,
+            clinic: false
+        }
     };
 
     // this.newStudent = {
@@ -40,6 +44,13 @@ app.controller('CreateLessonCtrl', ["$rootScope", "$scope", "$timeout", "$uibMod
             });
         }
     };
+
+//     $scope.$on('gmPlacesAutocomplete::placeChanged', function(){
+//       var location = this.lessonDetails.location.getPlace().geometry.location;
+//       this.lessonDetails.location.latitude = location.lat();
+//       this.lessonDetails.location.longitude = location.lng();
+//       //$scope.$apply();
+//   });
 
     // this.createNewStudent = function() {
     //     // quick and even dirtier client-side validation

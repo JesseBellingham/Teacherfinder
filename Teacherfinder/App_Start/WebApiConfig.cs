@@ -76,14 +76,19 @@
                 defaults: new { controller = "Person", action = "Get" },
                 constraints: new { personId = @"\d+" }
             );
+
+            config.Routes.MapHttpRoute
+            (
+                name: "UpdateLocation",
+                routeTemplate: "api/{controller}/{action}",
+                defaults: new { controller = "Person", action = "UpdateLocation" }
+            );
             #endregion
 
             #region Dependency Injection
             var builder = new ContainerBuilder();
             
             builder.RegisterType<TeacherfinderDataContext>().InstancePerRequest();
-            //builder.RegisterType<ApplicationUserManager>().As<ApplicationUserManager>();
-            //builder.RegisterType<ApplicationSignInManager>().As<ApplicationSignInManager>();
             builder.RegisterType<LessonRepository>().As<ILessonRepository>();
             builder.RegisterType<StudentRepository>().As<IStudentRepository>();
             builder.RegisterType<EnrolmentRepository>().As<IEnrolmentRepository>();

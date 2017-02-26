@@ -4,6 +4,8 @@
     using Interfaces.Repositories;
     using System;
     using Interfaces.Services;
+    using Models.View;
+    using System.Data.Entity.Spatial;
 
     public class PersonService : IPersonService
     {
@@ -41,9 +43,20 @@
             return _personRepository.GetPersonByIdentity(appUserId);
         }
 
-        //public bool PersonIsTeacher(int personId)
-        //{
-        //    return _
-        //}
+        public void UpdateLocation(string appUserId, PersonLocationModel model)
+        {
+            var person = GetPersonByIdentity(appUserId);
+
+            person.CurrentLocation = new Location
+            {
+                AddressLine1 = model.AddressLine1,
+                Suburb = model.Suburb,
+                City = model.City,
+                Country = model.Country,
+                GeoLocation = DbGeography.FromText(string.Format("POINT({0} {1})", model.Latitude, model.Longitude))
+            };
+
+            _personRepository.UpdatePerson(person);
+        }
     }
 }

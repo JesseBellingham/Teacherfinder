@@ -73,5 +73,9 @@
     @Scripts.Render("~/Content/app/services/dashboard/dashboard-service.js")
     @Scripts.Render("~/Content/app/controllers/dashboard/dashboard-controller.js")
     @Scripts.Render("~/Content/app/controllers/shared/create-lesson-controller.js")
+    @*@Scripts.Render("~/bundles/googlemaps")*@
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfKdxNyLrx0lgB_T0B80OijAlJSUfu8Oc&libraries=places"></script>
+    <script src="http://jvandemo.github.io/angularjs-google-maps/dist/angularjs-google-maps.js"></script>
+    @Scripts.Render("~/Content/app/directives/google-places-autocomplete-directive.js")
 
 }

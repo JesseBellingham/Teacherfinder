@@ -11,5 +11,6 @@ namespace Teacherfinder.DataLayer.Interfaces.Repositories
         int CreatePerson(Person person);
         Person GetPerson(int personId);
         Person GetPersonByIdentity(string appUserId);
+        void UpdatePerson(Person person);
     }
 }
